@@ -1,13 +1,9 @@
 from utils import converteStrParaFloat
 
-extrato = ""
-saldo = 0
-numero_saques = 0
 LIMITE = 500
 LIMITE_SAQUES = 3
 
-def depositar():
-    global saldo, extrato
+def depositar(extrato, saldo, /):
     
     print("Depósito:")
     valorStr = input("Valor a depositar: ")
@@ -18,11 +14,11 @@ def depositar():
     if valor > 0:
         saldo += valor
         extrato += f"+ R${valor:.2f}\n"
+        return extrato, saldo
     else:
         print("São aceitos valores positivos apenas.")
 
-def sacar():
-    global saldo, numero_saques, extrato
+def sacar(*, extrato, saldo, numero_saques):
 
     print("Saque:")
     valorStr = input("Valor a sacar: ")
@@ -42,8 +38,9 @@ def sacar():
         saldo -= valor
         numero_saques += 1
         extrato += f"- R${valor:.2f}\n"
+        return extrato, saldo, numero_saques
 
-def exibirExtrato():
+def exibirExtrato(saldo, /, *, extrato):
     print("Extrato:")
     if extrato:
         print(f"{extrato}\nSaldo atual: R${saldo:.2f}")
