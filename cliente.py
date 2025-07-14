@@ -1,9 +1,13 @@
 from transacao import Deposito, Saque
 
 class Cliente:
-    def __init__(self, endereco: str, contas: list = []):
+    def __init__(self, endereco: str):
         self._endereco = endereco
-        self._contas = contas
+        self._contas = []
+
+    @property
+    def contas(self) -> list:
+        return self._contas
 
     def realizar_transacao(self, conta, transacao):
         if not conta in self._contas:
@@ -11,11 +15,11 @@ class Cliente:
             return
         
         if isinstance(transacao, Deposito):           
-            if conta.depositar(transacao._valor):
+            if conta.depositar(transacao.valor):
                 transacao.registrar(conta=conta)
             
         elif isinstance(transacao,Saque):
-            if conta.sacar(transacao._valor):
+            if conta.sacar(transacao.valor):
                 transacao.registrar(conta)
         else:
             print("Transação inválida")
@@ -28,19 +32,28 @@ class Cliente:
 
 class PessoaFisica(Cliente):
     def __init__(self, cpf: str, nome: str, data_nascimento: str, 
-                 endereco: str, contas: list = []):
+                 endereco: str):
         self._cpf = cpf
         self._nome = nome
         self._data_nascimento = data_nascimento
-        super().__init__(endereco, contas)
+        self._numero_saques = 0
+        super().__init__(endereco)
+
+    @property
+    def cpf(self) -> str:
+        return self._cpf
+    
+    @property
+    def numero_saques(self) -> int:
+        return self._numero_saques
+    
+    def contar_saque(self):
+        def reiniciar():
+            if self.numero_saques == 5:
+                self.numero_saques = 0
+        reiniciar()
+        self._numero_saques += 1
 
     def __str__(self):
         return f'{self.__class__.__name__}: {self.__dict__}'
-    
-
-
-
-
-
-
-
+        

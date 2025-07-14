@@ -15,8 +15,12 @@ class Deposito(Transacao):
         super().__init__()
         self._valor = valor
 
+    @property
+    def valor(self) -> float:
+        return self._valor
+
     def registrar(self, conta):
-        conta._historico.adicionar_transacao(self)
+        conta.historico.adicionar_transacao(self)
 
     def __str__(self):
         return f'{self.__class__.__name__} de R${self._valor:.2f}'
@@ -26,8 +30,12 @@ class Saque(Transacao):
         super().__init__()
         self._valor = valor
 
+    @property
+    def valor(self) -> float:
+        return self._valor
+
     def registrar(self, conta):
-        conta._historico.adicionar_transacao(self)
+        conta.historico.adicionar_transacao(self)
 
     def __str__(self):
         return f'{self.__class__.__name__} de R${self._valor:.2f}'
