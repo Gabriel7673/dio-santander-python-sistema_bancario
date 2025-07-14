@@ -15,7 +15,7 @@ def validar_usuario(usuarios, cpf):
             
     return True, "Cadastro bem sucedido!"
 
-def validar_conta(usuarios, cpf):
+def validar_para_conta(usuarios, cpf):
     
     if not cpf_eh_numerico(cpf):
         return False, "Somente são aceitos números no CPF."
@@ -31,5 +31,5 @@ def cpf_eh_numerico(cpf):
 
 def cpf_cadastrado(usuarios, cpf):
     for u in usuarios:
-        if cpf in u:
+        if cpf == u.cpf:
             return True

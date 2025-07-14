@@ -1,8 +1,8 @@
-from utils import validar_usuario, validar_conta
+from utils import validar_usuario, validar_para_conta
+from cliente import PessoaFisica
+from conta import ContaCorrente
 
 usuarios = []
-contas = []
-NUMERO_AGENCIA = '0001'
 
 def cadastrar_usuario():
     print("Seja bem vindo! Por favor digite seus dados:")
@@ -15,20 +15,38 @@ def cadastrar_usuario():
     
     
     if valida:
-        usuario = (nome, data_nascimento, cpf, endereco,)
+        usuario = PessoaFisica(cpf, nome, data_nascimento, endereco,)
         usuarios.append(usuario)
         
     return msg
     
+def entrar_usuario():
+    cpf = input("CPF: ")
+    
+    cpf_valido, _ = validar_para_conta(usuarios, cpf)
 
-def criar_conta():
+    if cpf_valido:
+        for usuario in usuarios:
+            if cpf == usuario.cpf:
+                return usuario
+    print("CPF não registrado.")
+    return 
+
+def criar_conta(cliente):
+    conta = ContaCorrente.nova_conta(cliente, len(cliente.contas)+1)
+
+    if conta is not None:
+        print("Conta criada com sucesso!")
+        return conta
+    print("Desculpe, não foi possível criar a conta.")
+
+def escolher_conta(cliente) -> ContaCorrente | None:
+    nro_conta = int(input("Nº da conta: "))
+
+    for conta in cliente.contas:
+        if nro_conta == conta.numero:
+            print("A conta foi acessada com sucesso!")
+            return conta
     
-    cpf = input('CPF do cliente: ')
-    
-    valida, msg = validar_conta(usuarios, cpf)
-    
-    if valida:
-        conta = (NUMERO_AGENCIA, len(contas)+1, cpf,)
-        contas.append(conta)
-    
-    return msg
+    print("Não foi possível acessar uma conta com esse número.")
+    return

@@ -1,9 +1,7 @@
 from utils import converteStrParaFloat
+from transacao import Deposito, Saque
 
-LIMITE = 500
-LIMITE_SAQUES = 3
-
-def depositar(extrato, saldo, /):
+def depositar(cliente, conta):
     
     print("Depósito:")
     valorStr = input("Valor a depositar: ")
@@ -12,13 +10,11 @@ def depositar(extrato, saldo, /):
     if valor is None: return
 
     if valor > 0:
-        saldo += valor
-        extrato += f"+ R${valor:.2f}\n"
-        return extrato, saldo
+        cliente.realizar_transacao(conta, Deposito(valor))
     else:
         print("São aceitos valores positivos apenas.")
 
-def sacar(*, extrato, saldo, numero_saques):
+def sacar(cliente, conta):
 
     print("Saque:")
     valorStr = input("Valor a sacar: ")
@@ -26,23 +22,18 @@ def sacar(*, extrato, saldo, numero_saques):
 
     if valor is None: return
 
-    if valor > 500:
-        print(f"O limite de saque é de R${LIMITE:.2f}.")
+    if valor > conta.limite:
+        print(f"O limite de saque é de R${conta.limite:.2f}.")
     elif valor <= 0:
         print("São aceitos valores positivos apenas.")
-    elif numero_saques >= LIMITE_SAQUES:
-        print(f"O limite de saques diários é {LIMITE_SAQUES} vezes.")
-    elif saldo < valor:
+    elif cliente.numero_saques >= conta.limite_saques:
+        print(f"O limite de saques diários é {conta.limite_saques} vezes.")
+    elif conta.saldo < valor:
         print("Saldo insuficiente.")
     else:
-        saldo -= valor
-        numero_saques += 1
-        extrato += f"- R${valor:.2f}\n"
-        return extrato, saldo, numero_saques
+        cliente.realizar_transacao(conta, Saque(valor))
+        cliente.contar_saque()
 
-def exibirExtrato(saldo, /, *, extrato):
-    print("Extrato:")
-    if extrato:
-        print(f"{extrato}\nSaldo atual: R${saldo:.2f}")
-    else:
-        print("Extrato está vazio.")
+def exibirHistorico(conta):
+    print(conta.historico)
+    print(f'Saldo atual de R${conta.saldo:.2f}')

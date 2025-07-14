@@ -1,37 +1,66 @@
-from operacoes import depositar, sacar, exibirExtrato
-from cadastramento import cadastrar_usuario, criar_conta
+from operacoes import depositar, sacar, exibirHistorico
+from cadastramento import cadastrar_usuario, criar_conta, entrar_usuario, escolher_conta
 
-extrato = ""
-saldo = 0
-numero_saques = 0
+menu_inicial = """
 
-menu = """
+Opções:
+(1) Efetuar Login
+(2) Cadastrar Cliente
+(0) Encerrar
+=> """
 
-Opções
+menu_operacoes = """
 (1) Depositar
 (2) Sacar
-(3) Extrato
-(4) Cadastrar Cliente
-(5) Cadastrar Conta
+(3) Histórico da Conta
+(4) Cadastrar Conta
+(5) Trocar Conta
+(6) Listar Contas
 (0) Sair
 => """
 
+
 while True:
-    opcao = input(menu)
+    opcao = input(menu_inicial)
     print()
 
     try:
         if opcao == "1":
-            extrato, saldo = depositar(extrato, saldo)
+            cliente = entrar_usuario()
+            if cliente.contas == []:
+                conta = criar_conta(cliente)
+                cliente.adicionar_conta(conta)
+            else:
+                conta = cliente.contas[0]
+            while True:
+                print(f'\nAgência {conta.AGENCIA} - Conta {conta.numero}')
+                opcao2 = input(menu_operacoes)
+                print()
+
+                try:                    
+                    if opcao2 == "1":
+                        depositar(cliente, conta)
+                    elif opcao2 == "2":
+                        sacar(cliente, conta)
+                    elif opcao2 == "3":
+                        exibirHistorico(conta)
+                    elif opcao2 == "4":
+                        conta = criar_conta(cliente)
+                        cliente.adicionar_conta(conta)
+                    elif opcao2 == "5":
+                        conta = escolher_conta(cliente)
+                    elif opcao2 == "6":
+                        for conta in cliente.contas:
+                           print(conta.numero)
+                    elif opcao2 == "0":
+                        print("Encerrando")
+                        break
+                    else:
+                        print("Opção inválida. Por favor, escolha uma opção válida.")
+                except TypeError:
+                    continue
         elif opcao == "2":
-            extrato, saldo, numero_saques = sacar(
-                saldo=saldo, extrato=extrato, numero_saques=numero_saques)
-        elif opcao == "3":
-            exibirExtrato(saldo, extrato=extrato)
-        elif opcao == "4":
             print(cadastrar_usuario())
-        elif opcao == "5":
-            print(criar_conta())
         elif opcao == "0":
             print("Encerrando")
             break
@@ -39,4 +68,3 @@ while True:
             print("Opção inválida. Por favor, escolha uma opção válida.")
     except TypeError:
         continue
-
