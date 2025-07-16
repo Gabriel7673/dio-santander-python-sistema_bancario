@@ -1,5 +1,6 @@
-from operacoes import depositar, sacar, exibirHistorico
+from operacoes import depositar, sacar, exibir_historico
 from cadastramento import cadastrar_usuario, criar_conta, entrar_usuario, escolher_conta
+from conta import ContaIterador
 
 menu_inicial = """
 
@@ -27,6 +28,7 @@ while True:
     try:
         if opcao == "1":
             cliente = entrar_usuario()
+
             if cliente.contas == []:
                 conta = criar_conta(cliente)
                 cliente.adicionar_conta(conta)
@@ -43,15 +45,15 @@ while True:
                     elif opcao2 == "2":
                         sacar(cliente, conta)
                     elif opcao2 == "3":
-                        exibirHistorico(conta)
+                        exibir_historico(conta)
                     elif opcao2 == "4":
                         conta = criar_conta(cliente)
                         cliente.adicionar_conta(conta)
                     elif opcao2 == "5":
                         conta = escolher_conta(cliente)
                     elif opcao2 == "6":
-                        for conta in cliente.contas:
-                           print(conta.numero)
+                        for c in ContaIterador(cliente.contas):
+                           print(c)
                     elif opcao2 == "0":
                         print("Encerrando")
                         break
