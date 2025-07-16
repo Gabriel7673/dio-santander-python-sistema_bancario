@@ -20,17 +20,18 @@ def sacar(cliente, conta):
 
     if valor is None: return
 
+    numero_saques = conta.historico.saques_do_dia()
+
     if valor > conta.limite:
         print(f"O limite de saque é de R${conta.limite:.2f}.")
     elif valor <= 0:
         print("São aceitos valores positivos apenas.")
-    elif cliente.numero_saques >= conta.limite_saques:
+    elif numero_saques >= conta.limite_saques:
         print(f"O limite de saques diários é {conta.limite_saques} vezes.")
     elif conta.saldo < valor:
         print("Saldo insuficiente.")
     else:
         cliente.realizar_transacao(conta, Saque(valor))
-        cliente.contar_saque()
 
 @log_transacao
 def exibir_historico(conta):

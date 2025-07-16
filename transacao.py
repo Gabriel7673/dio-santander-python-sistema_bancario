@@ -20,6 +20,10 @@ class Deposito(Transacao):
     def valor(self) -> float:
         return self._valor
 
+    @property
+    def data(self):
+        return self._data_hora
+
     def registrar(self, conta):
         conta.historico.adicionar_transacao(self)
 
@@ -34,6 +38,10 @@ class Saque(Transacao):
     @property
     def valor(self) -> float:
         return self._valor
+
+    @property
+    def data(self):
+        return self._data_hora
 
     def registrar(self, conta):
         conta.historico.adicionar_transacao(self)

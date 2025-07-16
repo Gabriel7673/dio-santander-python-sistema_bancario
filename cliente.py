@@ -51,13 +51,6 @@ class PessoaFisica(Cliente):
     def numero_saques(self) -> int:
         return self._numero_saques
     
-    def contar_saque(self):
-        def reiniciar():
-            if self.numero_saques == 5:
-                self.numero_saques = 0
-        reiniciar()
-        self._numero_saques += 1
-
     def __str__(self):
         return f'{self.__class__.__name__}: {self.__dict__}'
         

@@ -1,3 +1,7 @@
+from datetime import datetime
+
+from transacao import Saque
+
 class Historico:
 
     def __init__(self):
@@ -14,6 +18,18 @@ class Historico:
         for transacao in self._transacoes:
             if tipo_transacao is None or isinstance(transacao, tipo_transacao):
                 yield transacao
+    
+    def saques_do_dia(self):
+        data_atual = datetime.now().date()
+        transacoes = 0
+        for transacao in self._transacoes:
+            data_transacao = datetime.strptime(
+                transacao.data, "%d/%m/%Y %H:%M:%S"
+            ).date()
+            print(data_atual, data_transacao)
+            if data_atual == data_transacao and isinstance(transacao, Saque):
+                transacoes += 1
+        return transacoes
 
 
     def __str__(self):
