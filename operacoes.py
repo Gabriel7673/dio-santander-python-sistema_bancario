@@ -1,9 +1,8 @@
-from utils import converteStrParaFloat
+from utils import converteStrParaFloat, log_transacao
 from transacao import Deposito, Saque
 
+@log_transacao
 def depositar(cliente, conta):
-    
-    print("Depósito:")
     valorStr = input("Valor a depositar: ")
     valor = converteStrParaFloat(valorStr)
         
@@ -14,9 +13,8 @@ def depositar(cliente, conta):
     else:
         print("São aceitos valores positivos apenas.")
 
+@log_transacao
 def sacar(cliente, conta):
-
-    print("Saque:")
     valorStr = input("Valor a sacar: ")
     valor = converteStrParaFloat(valorStr)
 
@@ -34,6 +32,35 @@ def sacar(cliente, conta):
         cliente.realizar_transacao(conta, Saque(valor))
         cliente.contar_saque()
 
-def exibirHistorico(conta):
-    print(conta.historico)
+@log_transacao
+def exibir_historico(conta):
+    historico = conta.historico
+    if not historico.transacoes:
+        print("Nenhuma transação realizada")
+        return
+    menu_filtro = '''
+Filtrar histórico por:
+(1) Depósitos
+(2) Saques
+(3) Sem restrições
+=> '''
+    opcao = input(menu_filtro)
+    filtro = None
+    match opcao:
+        case "1":
+            filtro = Deposito
+        case "2": 
+            filtro = Saque
+        case "3":
+            filtro = None
+    if filtro is None:
+        print(historico)
+    else:
+        lista = []
+        for t in historico.gerar_relatorio(filtro):
+            lista.append(str(t))
+        print(f'{historico.__class__.__name__}:\n{"\n".join(lista)}')
+
+
+    print("-" * 25)
     print(f'Saldo atual de R${conta.saldo:.2f}')
