@@ -1,5 +1,27 @@
 from historico import Historico
 
+class ContaIterador:
+    def __init__(self, contas):
+        self.contas = contas
+        self._index = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        try:
+            conta = self.contas[self._index]
+            return f"""\
+Agência: {conta.AGENCIA}
+Número: {conta.numero}
+Titular: {conta.cliente.nome}
+Saldo: R$ {conta.saldo:.2f}
+"""
+        except IndexError:
+            raise StopIteration
+        finally:
+            self._index += 1
+
 class Conta:
     
     AGENCIA = "0001"
@@ -19,6 +41,10 @@ class Conta:
     def numero(self) -> int:
         return self._numero
     
+    @property
+    def cliente(self):
+        return self._cliente
+
     @property
     def historico(self) -> Historico:
         return self._historico

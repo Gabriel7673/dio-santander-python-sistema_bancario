@@ -44,6 +44,10 @@ class PessoaFisica(Cliente):
         return self._cpf
     
     @property
+    def nome(self) -> str:
+        return self._nome
+    
+    @property
     def numero_saques(self) -> int:
         return self._numero_saques
     
