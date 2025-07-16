@@ -70,3 +70,5 @@ while True:
             print("Opção inválida. Por favor, escolha uma opção válida.")
     except TypeError:
         continue
+    except AttributeError:
+        continue
