@@ -1,3 +1,5 @@
+from datetime import datetime
+
 def converteStrParaFloat(valorStr: str) -> float:
     try:
         valor = float(valorStr)
@@ -33,3 +35,12 @@ def cpf_cadastrado(usuarios, cpf):
     for u in usuarios:
         if cpf == u.cpf:
             return True
+
+def log_transacao(funcao):
+    def wrapp(*args, **kwargs):
+        data_hora = datetime.now().strftime("%d/%m/%Y - %H:%M:%S")
+        print(f'{data_hora} -> { \
+            " ".join(funcao.__name__.split("_")).capitalize()}')
+        funcao(*args, **kwargs)
+    
+    return wrapp
