@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
 
+
 class Transacao(ABC):
 
     @abstractmethod
@@ -10,6 +11,7 @@ class Transacao(ABC):
     @abstractmethod
     def __str__(self):
         pass
+
 
 class Deposito(Transacao):
     def __init__(self, valor: float):
@@ -28,7 +30,8 @@ class Deposito(Transacao):
         conta.historico.adicionar_transacao(self)
 
     def __str__(self):
-        return f'{self.__class__.__name__} de R${self._valor:.2f} \t {self._data_hora}'
+        return f"{self.__class__.__name__} de R${self._valor:.2f} \t {self._data_hora}"
+
 
 class Saque(Transacao):
     def __init__(self, valor: float):
@@ -47,4 +50,4 @@ class Saque(Transacao):
         conta.historico.adicionar_transacao(self)
 
     def __str__(self):
-        return f'{self.__class__.__name__} de R${self._valor:.2f} \t {self._data_hora}'
+        return f"{self.__class__.__name__} de R${self._valor:.2f} \t {self._data_hora}"

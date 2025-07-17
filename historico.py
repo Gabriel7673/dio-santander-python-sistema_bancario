@@ -2,6 +2,7 @@ from datetime import datetime
 
 from transacao import Saque
 
+
 class Historico:
 
     def __init__(self):
@@ -18,7 +19,7 @@ class Historico:
         for transacao in self._transacoes:
             if tipo_transacao is None or isinstance(transacao, tipo_transacao):
                 yield transacao
-    
+
     def saques_do_dia(self):
         data_atual = datetime.now().date()
         transacoes = 0
@@ -31,9 +32,6 @@ class Historico:
                 transacoes += 1
         return transacoes
 
-
     def __str__(self):
         lista = "\n".join(str(t) for t in self._transacoes)
-        return f'{self.__class__.__name__}:\n{lista}'
-    
-    
+        return f"{self.__class__.__name__}:\n{lista}"

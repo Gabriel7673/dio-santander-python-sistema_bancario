@@ -1,6 +1,6 @@
-from operacoes import depositar, sacar, exibir_historico
 from cadastramento import cadastrar_usuario, criar_conta, entrar_usuario, escolher_conta
 from conta import ContaIterador
+from operacoes import depositar, exibir_historico, sacar
 
 menu_inicial = """
 
@@ -35,11 +35,11 @@ while True:
             else:
                 conta = cliente.contas[0]
             while True:
-                print(f'\nAgência {conta.AGENCIA} - Conta {conta.numero}')
+                print(f"\nAgência {conta.AGENCIA} - Conta {conta.numero}")
                 opcao2 = input(menu_operacoes)
                 print()
 
-                try:                    
+                try:
                     if opcao2 == "1":
                         depositar(cliente, conta)
                     elif opcao2 == "2":
@@ -53,7 +53,7 @@ while True:
                         conta = escolher_conta(cliente)
                     elif opcao2 == "6":
                         for c in ContaIterador(cliente.contas):
-                           print(c)
+                            print(c)
                     elif opcao2 == "0":
                         print("Encerrando")
                         break
@@ -70,4 +70,3 @@ while True:
             print("Opção inválida. Por favor, escolha uma opção válida.")
     except TypeError:
         continue
-    
