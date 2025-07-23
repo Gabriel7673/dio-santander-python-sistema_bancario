@@ -1,4 +1,4 @@
-from historico import Historico
+from models.historico import Historico
 
 
 class ContaIterador:

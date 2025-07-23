@@ -1,5 +1,5 @@
-from transacao import Deposito, Saque
-from utils import converteStrParaFloat, log_transacao
+from models.transacao import Deposito, Saque
+from utils.utils import converteStrParaFloat, log_transacao
 
 
 @log_transacao

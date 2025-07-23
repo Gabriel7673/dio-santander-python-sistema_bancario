@@ -1,4 +1,4 @@
-from transacao import Deposito, Saque
+from models.transacao import Deposito, Saque
 
 
 class Cliente:

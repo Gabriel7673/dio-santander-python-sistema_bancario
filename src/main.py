@@ -1,6 +1,11 @@
-from cadastramento import cadastrar_usuario, criar_conta, entrar_usuario, escolher_conta
-from conta import ContaIterador
-from operacoes import depositar, exibir_historico, sacar
+from models.conta import ContaIterador
+from services.cadastramento import (
+    cadastrar_usuario,
+    criar_conta,
+    entrar_usuario,
+    escolher_conta,
+)
+from services.operacoes import depositar, exibir_historico, sacar
 
 menu_inicial = """
 

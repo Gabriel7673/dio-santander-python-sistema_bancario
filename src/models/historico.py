@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from transacao import Saque
+from models.transacao import Saque
 
 
 class Historico:

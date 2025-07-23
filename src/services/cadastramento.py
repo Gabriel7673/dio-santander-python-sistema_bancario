@@ -1,6 +1,6 @@
-from cliente import PessoaFisica
-from conta import ContaCorrente
-from utils import validar_para_conta, validar_usuario
+from models.cliente import PessoaFisica
+from models.conta import ContaCorrente
+from utils.utils import validar_para_conta, validar_usuario
 
 usuarios = []
 
